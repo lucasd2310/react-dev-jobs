@@ -5,8 +5,14 @@ import { useState } from 'react'
 export function JobsList() {
   const [jobData, setJobData] = useState(jobs)
   const [searchTerm, setSearchTerm] = useState('')
-
+  const [filterByLocation, setFilterByLocation] = useState('')
   const searchTermValue = searchTerm.toLowerCase()
+
+  const locationSearchHandler = () => {
+    const filteredData = jobs.filter((job) => job.location.toLowerCase().includes(filterByLocation.toLowerCase()))
+
+    setJobData(filteredData)
+  }
 
   return (
     <section className='job__list'>
@@ -20,6 +26,15 @@ export function JobsList() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
+            </div>
+            <div className='search__panel-02'>
+              <input
+                  type='text'
+                  placeholder='Filter by location'
+                  value={filterByLocation}
+                  onChange={(e) => setFilterByLocation(e.target.value)}
+                />
+                <button onClick={locationSearchHandler}>Filter</button>
             </div>
           </div>
           <div className='job__wrapper'>
