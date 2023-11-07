@@ -5,14 +5,42 @@ import { useState } from 'react'
 export function JobsList() {
   const [jobData, setJobData] = useState(jobs)
   const [searchTerm, setSearchTerm] = useState('')
-  const [filterByLocation, setFilterByLocation] = useState('')
+  const [searchByLocation, setSearchByLocation] = useState('')
   const searchTermValue = searchTerm.toLowerCase()
 
   const locationSearchHandler = () => {
-    const filteredData = jobs.filter((job) => job.location.toLowerCase().includes(filterByLocation.toLowerCase()))
+    const filteredData = jobs.filter((job) => job.location.toLowerCase().includes(searchByLocation.toLowerCase()))
 
     setJobData(filteredData)
   }
+
+  const filterJobData = (e) => {
+    let filteredData
+    const filteredValue = e.target.value
+    
+    switch (filteredValue) {
+      case 'full-time':
+        filteredData = jobs.filter((job) => job.contract === 'Full Time')
+        setJobData(filteredData)
+        break;
+      case 'part-time':
+        filteredData = jobs.filter((job) => job.contract === 'Part Time')
+        setJobData(filteredData)
+        break;
+      case 'freelance':
+        filteredData = jobs.filter((job) => job.contract === 'Freelance')
+        setJobData(filteredData)
+        break;
+      case 'others':
+        filteredData = jobs.filter((job) => !['Full Time', 'Part Time', 'Freelance'].includes(job.contract))
+        setJobData(filteredData)
+        break;
+      default:
+        setJobData(jobs)
+        break;
+    }
+  }
+  
 
   return (
     <section className='job__list'>
@@ -30,11 +58,20 @@ export function JobsList() {
             <div className='search__panel-02'>
               <input
                   type='text'
-                  placeholder='Filter by location'
-                  value={filterByLocation}
-                  onChange={(e) => setFilterByLocation(e.target.value)}
+                  placeholder='Search by location'
+                  value={searchByLocation}
+                  onChange={(e) => setSearchByLocation(e.target.value)}
                 />
-                <button onClick={locationSearchHandler}>Filter</button>
+                <button onClick={locationSearchHandler}>Search</button>
+            </div>
+            <div className='search__panel-03'>
+              <select onChange={filterJobData}>
+                <option>Filter job by contract</option>
+                <option value='full-time'>Full Time</option>
+                <option value='part-time'>Part Time</option>
+                <option value='freelance'>Freelance</option>
+                <option value='others'>Others</option>
+              </select>
             </div>
           </div>
           <div className='job__wrapper'>
