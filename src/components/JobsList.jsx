@@ -90,6 +90,7 @@ export function JobsList() {
                   className='job__item'
                   key={item.id}
                 >
+                  <img src={item.logo} alt='logo' />
                   <div className='job__content'>
                     <h6>
                       {item.postedAt} - {item.contract}
