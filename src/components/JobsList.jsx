@@ -50,6 +50,7 @@ export function JobsList() {
             <div className='search__panel-01'>
               <input
                 type='text'
+                size={40}
                 placeholder='Search by position or company'
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -66,7 +67,7 @@ export function JobsList() {
             </div>
             <div className='search__panel-03'>
               <select onChange={filterJobData}>
-                <option>Filter job by contract</option>
+                <option>Filter job by</option>
                 <option value='full-time'>Full Time</option>
                 <option value='part-time'>Part Time</option>
                 <option value='freelance'>Freelance</option>
@@ -74,7 +75,7 @@ export function JobsList() {
               </select>
             </div>
           </div>
-          <div className='job__wrapper'>
+          <div className='jobs__wrapper'>
             {jobData
               ?.filter((job) => {
                 if (searchTerm === '') return job
